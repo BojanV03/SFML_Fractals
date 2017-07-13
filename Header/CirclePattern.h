@@ -1,5 +1,5 @@
-#ifndef CIRCLEFRACTAL_H
-#define CIRCLEFRACTAL_H
+#ifndef CIRCLEPATTERN_H
+#define CIRCLEPATTERN_H
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
