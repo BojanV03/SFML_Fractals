@@ -6,6 +6,7 @@
 #include "Header/Renderer.h"
 #include "Header/Sierpinski.h"
 #include "Header/CirclePattern.h"
+#include "Header/KochSnowflake.h"
 #define WIDTH 1050
 #define HEIGHT 1050
 
@@ -41,6 +42,10 @@ int main()
         }
         window.clear();
 
+//        drawKochSnowflake(sf::Vector2f(0, 0), sf::Vector2f(WIDTH, HEIGHT), i, true, window);
+//        drawKochSnowflake(sf::Vector2f(0, 0), sf::Vector2f(WIDTH, HEIGHT), i, falce, window);
+
+/*
         // Animated iterations for Sierpinski Triangle
         std::vector<int> skipping;
         skipping.push_back(6);
@@ -52,7 +57,7 @@ int main()
         skipping.push_back(17);
         skipping.push_back(18);
         drawSierpinskiCarpet(sf::Vector2f(0, 0), sf::Vector2f(WIDTH, HEIGHT), skipping, 5, i, window);
-
+*/
 //        drawSierpinskiTriangle(sf::Vector2f(0, 0), sf::Vector2f(WIDTH, HEIGHT), i, window);
   //      std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
@@ -61,7 +66,7 @@ int main()
   //     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
         window.display();
-        std::cout << currFrame.count() - prevFrame.count() << std::endl;
+//        std::cout << currFrame.count() - prevFrame.count() << std::endl;
         prevFrame = currFrame;
         currFrame = std::chrono::duration_cast <std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
     }
