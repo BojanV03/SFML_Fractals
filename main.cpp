@@ -7,11 +7,13 @@
 #include "Header/Sierpinski.h"
 #include "Header/CirclePattern.h"
 #include "Header/KochSnowflake.h"
-#define WIDTH 1050
-#define HEIGHT 1050
+#include "Header/TreeFractal.h"
+#define WIDTH 1920
+#define HEIGHT 1080
 
 std::chrono::milliseconds prevFrame;
 std::chrono::milliseconds currFrame;
+
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "SFML works!");
@@ -33,15 +35,29 @@ int main()
               else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
               {
                 i++;
+                std::cout << i << std::endl;
               }
               else if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
               {
                 i--;
+                std::cout << i << std::endl;
               }
             }
         }
         window.clear();
-
+/*
+        TreeFractal tf = TreeFractal();
+        tf.setStartLocation(WIDTH/2, HEIGHT-100);
+        tf.setLeftAngle(30);
+        tf.setRightAngle(13);
+        tf.setNumberOfIterations(i);
+        tf.setInitWidth(16);
+        tf.setInitHeight(128);
+        sf::Color brown = sf::Color(70,190,63);
+        tf.setColor(brown);
+        tf.setScalingFactor(0.88);
+        tf.Render(window);
+        */
 //        drawKochSnowflake(sf::Vector2f(0, 0), sf::Vector2f(WIDTH, HEIGHT), i, true, window);
 //        drawKochSnowflake(sf::Vector2f(0, 0), sf::Vector2f(WIDTH, HEIGHT), i, falce, window);
 
