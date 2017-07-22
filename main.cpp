@@ -4,12 +4,13 @@
 #include <chrono>
 #include <cmath>
 #include "Header/Renderer.h"
-#include "Header/Sierpinski.h"
+#include "Header/SierpinskiTriangle.h"
+#include "Header/SierpinskiCarpet.h"
 #include "Header/CirclePattern.h"
 #include "Header/KochSnowflake.h"
 #include "Header/TreeFractal.h"
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 1024
+#define HEIGHT 1024
 
 std::chrono::milliseconds prevFrame;
 std::chrono::milliseconds currFrame;
@@ -45,6 +46,51 @@ int main()
             }
         }
         window.clear();
+
+
+
+        SierpinskiTriangle st = SierpinskiTriangle();
+        st.setBoundingBox(0, 0, WIDTH/2, HEIGHT/2);
+        st.setNumberOfIterations(i);
+        st.setColor(sf::Color::Red);
+        st.Render(window);
+
+
+        KochSnowflake ks = KochSnowflake();
+        ks.setBoundingBox(WIDTH/2, HEIGHT/2, WIDTH, HEIGHT);
+        ks.setNumberOfIterations(i);
+        ks.setColor(sf::Color::Red);
+        ks.setInverted(false);
+        ks.Render(window);
+
+        SierpinskiCarpet sc = SierpinskiCarpet();
+        sc.setBoundingBox(0, HEIGHT/2, WIDTH/2, HEIGHT);
+        sc.setNumberOfIterations(i);
+        sc.setColor(sf::Color::Blue);
+        sc.setGridSize(3);
+        sc.addSquareToSkip(4);
+        sc.Render(window);
+
+        sc.setBoundingBox(WIDTH/2, 0, WIDTH, HEIGHT/2);
+        sc.setGridSize(5);
+        sc.clearSquaresToSkip();
+        sc.addSquareToSkip(6);
+        sc.addSquareToSkip(7);
+        sc.addSquareToSkip(8);
+        sc.addSquareToSkip(11);
+        sc.addSquareToSkip(13);
+        sc.addSquareToSkip(16);
+        sc.addSquareToSkip(17);
+        sc.addSquareToSkip(18);
+        sc.Render(window);
+
+/*
+        CirclePattern cp = CirclePattern();
+        cp.setBoundingBox(0, 0, WIDTH, HEIGHT);
+        cp.setColor(sf::Color::Red);
+        cp.setNumberOfIterations(i);
+        cp.Render(window);
+*/
 /*
         TreeFractal tf = TreeFractal();
         tf.setStartLocation(WIDTH/2, HEIGHT-100);

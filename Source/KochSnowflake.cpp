@@ -1,8 +1,63 @@
 #include "../Header/KochSnowflake.h"
 #include <iostream>
-void drawKochSnowflake(sf::Vector2f topLeft, sf::Vector2f bottomRight,
-    int numberOfIterations, bool inverted, sf::RenderWindow& window)
+
+void KochSnowflake::setNumberOfIterations(int newNumberOfIterations)
 {
+  m_numberOfIterations = newNumberOfIterations;
+}
+
+int KochSnowflake::getNumberOfIterations() const
+{
+  return m_numberOfIterations;
+}
+
+void KochSnowflake::setBoundingBox(const sf::RectangleShape& newBoundingBox)
+{
+  m_boundingBox = sf::RectangleShape(newBoundingBox);
+}
+void KochSnowflake::setBoundingBox(const sf::Vector2f& topLeft, const sf::Vector2f& bottomRight)
+{
+  m_boundingBox = sf::RectangleShape();
+  m_boundingBox.setPosition(topLeft);
+  m_boundingBox.setSize(sf::Vector2f(bottomRight.x-topLeft.x, bottomRight.y-topLeft.y));
+}
+void KochSnowflake::setBoundingBox(float x1, float y1, float x2, float y2)
+{
+  m_boundingBox = sf::RectangleShape();
+  m_boundingBox.setPosition(sf::Vector2f(x1, y1));
+  m_boundingBox.setSize(sf::Vector2f(x2 - x1, y2 - y1));
+}
+
+sf::RectangleShape KochSnowflake::getBoundingBox() const
+{
+  return m_boundingBox;
+}
+
+void KochSnowflake::setColor(const sf::Color& newColor)
+{
+  m_color = sf::Color(newColor);
+}
+
+sf::Color KochSnowflake::getColor() const
+{
+  return m_color;
+}
+
+
+void KochSnowflake::setInverted(bool newInverted)
+{
+  m_inverted = newInverted;
+}
+bool KochSnowflake::getInverted() const
+{
+  return m_inverted;
+}
+
+void KochSnowflake::Render(sf::RenderWindow& window)
+{
+  sf::Vector2f topLeft = m_boundingBox.getPosition();
+  sf::Vector2f bottomRight = sf::Vector2f(m_boundingBox.getPosition().x + m_boundingBox.getSize().x, m_boundingBox.getPosition().y + m_boundingBox.getSize().y);
+
   float oneThirdWidth = (bottomRight.x - topLeft.x)/6;
   float oneThirdHeight = (bottomRight.y - topLeft.y)/6;
 
@@ -10,38 +65,36 @@ void drawKochSnowflake(sf::Vector2f topLeft, sf::Vector2f bottomRight,
   sf::Vector2f right = sf::Vector2f(bottomRight.x-oneThirdWidth, bottomRight.y-2*oneThirdHeight);
   sf::Vector2f top = TopPoint(left, right);
 
-// 061 160 2000
-
-  if(numberOfIterations == 0)
+  if(m_numberOfIterations == 0)
   {
-    drawTriangle(top, left, right, sf::Color::Blue, window);
+    drawTriangle(top, left, right, m_color, window);
   }
   else
   {
-    if(inverted)
+    if(m_inverted)
     {
-      KochSnowflake(right, left, 1, numberOfIterations, inverted, window);
-      KochSnowflake(left, top, 1, numberOfIterations, inverted, window);
-      KochSnowflake(top, right, 1, numberOfIterations, inverted, window);
+      drawKochSnowflake(right, left, 1, m_numberOfIterations, m_inverted, window);
+      drawKochSnowflake(left, top, 1, m_numberOfIterations, m_inverted, window);
+      drawKochSnowflake(top, right, 1, m_numberOfIterations, m_inverted, window);
     }
     else
     {
-      drawTriangle(top, left, right, sf::Color::Blue, window);
-      KochSnowflake(left, right, 1, numberOfIterations, inverted, window);
-      KochSnowflake(top, left, 1, numberOfIterations, inverted, window);
-      KochSnowflake(right, top, 1, numberOfIterations, inverted, window);
+      drawTriangle(top, left, right, m_color, window);
+      drawKochSnowflake(left, right, 1, m_numberOfIterations, m_inverted, window);
+      drawKochSnowflake(top, left, 1, m_numberOfIterations, m_inverted, window);
+      drawKochSnowflake(right, top, 1, m_numberOfIterations, m_inverted, window);
     }
   }
 }
 
-void KochSnowflake(sf::Vector2f pointA, sf::Vector2f pointB,
+void KochSnowflake::drawKochSnowflake(sf::Vector2f pointA, sf::Vector2f pointB,
    int currentIteration, int numberOfIterations, bool inverted, sf::RenderWindow& window)
 {
   if(currentIteration == numberOfIterations)
   {    sf::Vector2f a = sf::Vector2f(ONE_THIRD * (pointA.x - pointB.x) + pointB.x, ONE_THIRD * (pointA.y - pointB.y) + pointB.y);
     sf::Vector2f b = sf::Vector2f(TWO_THIRDS * (pointA.x - pointB.x) + pointB.x, TWO_THIRDS * (pointA.y - pointB.y) + pointB.y);
     sf::Vector2f c = TopPoint(a, b);
-    drawTriangle(a, b, c, sf::Color::Blue, window);
+    drawTriangle(a, b, c, m_color, window);
     return;
   }
   else
@@ -51,11 +104,11 @@ void KochSnowflake(sf::Vector2f pointA, sf::Vector2f pointB,
     sf::Vector2f c = TopPoint(b, a);
 
     if(!inverted)
-      drawTriangle(a, b, c, sf::Color::Blue, window);
-    KochSnowflake(pointA, a, currentIteration+1, numberOfIterations, inverted, window);
-    KochSnowflake(b, pointB, currentIteration+1, numberOfIterations, inverted, window);
-    KochSnowflake(a, c, currentIteration+1, numberOfIterations, inverted, window);
-    KochSnowflake(c, b, currentIteration+1, numberOfIterations, inverted, window);
+      drawTriangle(a, b, c, m_color, window);
+    drawKochSnowflake(pointA, a, currentIteration+1, numberOfIterations, inverted, window);
+    drawKochSnowflake(b, pointB, currentIteration+1, numberOfIterations, inverted, window);
+    drawKochSnowflake(a, c, currentIteration+1, numberOfIterations, inverted, window);
+    drawKochSnowflake(c, b, currentIteration+1, numberOfIterations, inverted, window);
   }
 }
 

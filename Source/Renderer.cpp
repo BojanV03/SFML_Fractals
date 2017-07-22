@@ -8,8 +8,8 @@ void drawTriangle(const sf::Vector2f &top, const sf::Vector2f &left, const sf::V
   shape.setPoint(1, left);
   shape.setPoint(2, right);
   shape.setFillColor(fillColor);
-  shape.setOutlineColor(fillColor);
-  shape.setOutlineThickness(2);
+  //shape.setOutlineColor(fillColor);
+  //shape.setOutlineThickness(2);
   window.draw(shape);
   return;
 }

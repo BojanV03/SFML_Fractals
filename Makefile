@@ -1,20 +1,23 @@
-exec: main.o TreeFractal.o Sierpinski.o Renderer.o CirclePattern.o KochSnowflake.o
+exec: main.o TreeFractal.o SierpinskiTriangle.o SierpinskiCarpet.o Renderer.o CirclePattern.o KochSnowflake.o
 	g++ *.o -o exec -lsfml-graphics -lsfml-window -lsfml-system
 
 main.o: main.cpp
 	g++ -c main.cpp
 
-TreeFractal.o: Source/TreeFractal.cpp
+TreeFractal.o: Source/TreeFractal.cpp Header/TreeFractal.h
 	g++ -c Source/TreeFractal.cpp
 
-KochSnowflake.o: Source/KochSnowflake.cpp
+KochSnowflake.o: Source/KochSnowflake.cpp Header/KochSnowflake.h
 	g++ -c Source/KochSnowflake.cpp
 
-Sierpinski.o: Source/Sierpinski.cpp
-	g++ -c Source/Sierpinski.cpp
+SierpinskiCarpet.o: Source/SierpinskiCarpet.cpp Header/SierpinskiCarpet.h
+	g++ -c Source/SierpinskiCarpet.cpp
 
-Renderer.o: Source/Renderer.cpp
+SierpinskiTriangle.o: Source/SierpinskiTriangle.cpp Header/SierpinskiTriangle.h
+	g++ -c Source/SierpinskiTriangle.cpp
+
+Renderer.o: Source/Renderer.cpp Header/Renderer.h
 	g++ -c Source/Renderer.cpp
 
-CirclePattern.o: Source/CirclePattern.cpp
+CirclePattern.o: Source/CirclePattern.cpp Header/CirclePattern.h
 	g++ -c Source/CirclePattern.cpp

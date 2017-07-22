@@ -1,14 +1,55 @@
 #include "../Header/CirclePattern.h"
 
 
-void drawCircleFractal(const sf::Vector2f &topLeft, const sf::Vector2f &bottomRight, int numberOfIterations, sf::RenderWindow &window)
+void CirclePattern::setNumberOfIterations(int newNumberOfIterations)
 {
-  circleFractal(topLeft, bottomRight, 0, numberOfIterations, window);
+  m_numberOfIterations = newNumberOfIterations;
+}
+int CirclePattern::getNumberOfIterations() const
+{
+  return m_numberOfIterations;
+}
 
+void CirclePattern::setBoundingBox(const sf::RectangleShape& newBoundingBox)
+{
+  m_boundingBox = sf::RectangleShape(newBoundingBox);
+}
+void CirclePattern::setBoundingBox(const sf::Vector2f& topLeft, const sf::Vector2f& bottomRight)
+{
+  m_boundingBox = sf::RectangleShape();
+  m_boundingBox.setPosition(topLeft);
+  m_boundingBox.setSize(sf::Vector2f(bottomRight.x-topLeft.x, bottomRight.y-topLeft.y));
+}
+void CirclePattern::setBoundingBox(float x1, float y1, float x2, float y2)
+{
+  m_boundingBox = sf::RectangleShape();
+  m_boundingBox.setPosition(sf::Vector2f(x1, y1));
+  m_boundingBox.setSize(sf::Vector2f(x2 - x1, y2 - y1));
+}
+sf::RectangleShape CirclePattern::getBoundingBox() const
+{
+  return m_boundingBox;
+}
+
+void CirclePattern::setColor(const sf::Color& newColor)
+{
+  m_color = sf::Color(newColor);
+}
+
+sf::Color CirclePattern::getColor() const
+{
+  return m_color;
+}
+
+void CirclePattern::Render(sf::RenderWindow& window)
+{
+  sf::Vector2f bottomRight = sf::Vector2f(m_boundingBox.getPosition().x + m_boundingBox.getSize().x, m_boundingBox.getPosition().y + m_boundingBox.getSize().y);
+  drawCircleFractal(m_boundingBox.getPosition(), bottomRight, 0, m_numberOfIterations, window);
 }
 
 
-void circleFractal(const sf::Vector2f &topLeft, const sf::Vector2f &bottomRight, int currentIteration,
+
+void CirclePattern::drawCircleFractal(const sf::Vector2f &topLeft, const sf::Vector2f &bottomRight, int currentIteration,
   int numberOfIterations, sf::RenderWindow &window)
 {
   if(currentIteration == numberOfIterations)
@@ -40,15 +81,15 @@ void circleFractal(const sf::Vector2f &topLeft, const sf::Vector2f &bottomRight,
   }
   else
   {
-    sf::Vector2f midTop = sf::Vector2f((topLeft.x + bottomRight.x)/2, topLeft.y);
-    sf::Vector2f midLeft = sf::Vector2f(topLeft.x, (topLeft.y + bottomRight.y)/2);
-    sf::Vector2f midRight = sf::Vector2f(bottomRight.x, (topLeft.y + bottomRight.y)/2);
-    sf::Vector2f midBottom = sf::Vector2f((topLeft.x + bottomRight.x)/2, bottomRight.y);
-    sf::Vector2f center = sf::Vector2f((topLeft.x + bottomRight.x)/2, (topLeft.y + bottomRight.y)/2);
+    sf::Vector2f midTop = sf::Vector2f((topLeft.x + bottomRight.x)/2.0, topLeft.y);
+    sf::Vector2f midLeft = sf::Vector2f(topLeft.x, (topLeft.y + bottomRight.y)/2.0);
+    sf::Vector2f midRight = sf::Vector2f(bottomRight.x, (topLeft.y + bottomRight.y)/2.0);
+    sf::Vector2f midBottom = sf::Vector2f((topLeft.x + bottomRight.x)/2.0, bottomRight.y);
+    sf::Vector2f center = sf::Vector2f((topLeft.x + bottomRight.x)/2.0, (topLeft.y + bottomRight.y)/2.0);
 
-    circleFractal(topLeft, center, currentIteration+1, numberOfIterations, window);
-    circleFractal(midTop, midRight, currentIteration+1, numberOfIterations, window);
-    circleFractal(midLeft, midBottom, currentIteration+1, numberOfIterations, window);
-    circleFractal(center, bottomRight, currentIteration+1, numberOfIterations, window);
+    drawCircleFractal(topLeft, center, currentIteration+1, numberOfIterations, window);
+    drawCircleFractal(midTop, midRight, currentIteration+1, numberOfIterations, window);
+    drawCircleFractal(midLeft, midBottom, currentIteration+1, numberOfIterations, window);
+    drawCircleFractal(center, bottomRight, currentIteration+1, numberOfIterations, window);
   }
 }

@@ -5,10 +5,12 @@ TreeFractal::TreeFractal()
 {
 
 }
+
 TreeFractal::~TreeFractal()
 {
 
 }
+
 sf::Vector2f& TreeFractal::getStartLocation()
 {
   return m_startLocation;
@@ -87,6 +89,7 @@ void TreeFractal::setScalingFactor(float newScalingFactor)
 {
   m_scalingFactor = newScalingFactor;
 }
+
 void TreeFractal::drawTreeFractal(int iteration, const sf::Vector2f& rootPosition, float rootRotation, sf::RenderWindow& window)
 {
   if(m_numberOfIterations <= 1)
