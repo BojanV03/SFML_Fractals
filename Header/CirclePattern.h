@@ -19,7 +19,7 @@ public:
   sf::Color getColor() const;
 
   void drawCircleFractal(const sf::Vector2f &topLeft, const sf::Vector2f &bottomRight,
-  int currentIteration, int numberOfIterations, sf::RenderWindow &window);
+  int currentIteration, sf::RenderWindow &window);
   void Render(sf::RenderWindow& window);
 
 private:

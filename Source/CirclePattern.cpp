@@ -44,15 +44,15 @@ sf::Color CirclePattern::getColor() const
 void CirclePattern::Render(sf::RenderWindow& window)
 {
   sf::Vector2f bottomRight = sf::Vector2f(m_boundingBox.getPosition().x + m_boundingBox.getSize().x, m_boundingBox.getPosition().y + m_boundingBox.getSize().y);
-  drawCircleFractal(m_boundingBox.getPosition(), bottomRight, 0, m_numberOfIterations, window);
+  drawCircleFractal(m_boundingBox.getPosition(), bottomRight, 0, window);
 }
 
 
 
 void CirclePattern::drawCircleFractal(const sf::Vector2f &topLeft, const sf::Vector2f &bottomRight, int currentIteration,
-  int numberOfIterations, sf::RenderWindow &window)
+  sf::RenderWindow &window)
 {
-  if(currentIteration == numberOfIterations)
+  if(currentIteration == m_numberOfIterations)
     return;
 
   float radius = std::abs(bottomRight.x - topLeft.x)/4.0;
@@ -61,7 +61,7 @@ void CirclePattern::drawCircleFractal(const sf::Vector2f &topLeft, const sf::Vec
   circle.setOutlineColor(sf::Color::Red);
   circle.setOutlineThickness(1);
 
-  if(currentIteration == numberOfIterations-1)
+  if(currentIteration == m_numberOfIterations-1)
   {
     for(int i = 0; i < 3; i++)
     {
@@ -87,9 +87,9 @@ void CirclePattern::drawCircleFractal(const sf::Vector2f &topLeft, const sf::Vec
     sf::Vector2f midBottom = sf::Vector2f((topLeft.x + bottomRight.x)/2.0, bottomRight.y);
     sf::Vector2f center = sf::Vector2f((topLeft.x + bottomRight.x)/2.0, (topLeft.y + bottomRight.y)/2.0);
 
-    drawCircleFractal(topLeft, center, currentIteration+1, numberOfIterations, window);
-    drawCircleFractal(midTop, midRight, currentIteration+1, numberOfIterations, window);
-    drawCircleFractal(midLeft, midBottom, currentIteration+1, numberOfIterations, window);
-    drawCircleFractal(center, bottomRight, currentIteration+1, numberOfIterations, window);
+    drawCircleFractal(topLeft, center, currentIteration+1, window);
+    drawCircleFractal(midTop, midRight, currentIteration+1, window);
+    drawCircleFractal(midLeft, midBottom, currentIteration+1, window);
+    drawCircleFractal(center, bottomRight, currentIteration+1, window);
   }
 }

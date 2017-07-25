@@ -33,7 +33,7 @@ public:
   bool getInverted() const;
 
   void drawKochSnowflake(sf::Vector2f pointA, sf::Vector2f pointB,
-      int currentIteration, int numberOfIterations, bool inverted, sf::RenderWindow& window);
+      int currentIteration, bool inverted, sf::RenderWindow& window);
   void Render(sf::RenderWindow& window);
 private:
   sf::RectangleShape m_boundingBox;

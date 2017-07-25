@@ -47,8 +47,6 @@ int main()
         }
         window.clear();
 
-
-
         SierpinskiTriangle st = SierpinskiTriangle();
         st.setBoundingBox(0, 0, WIDTH/2, HEIGHT/2);
         st.setNumberOfIterations(i);
@@ -70,7 +68,7 @@ int main()
         sc.setGridSize(3);
         sc.addSquareToSkip(4);
         sc.Render(window);
-
+/*
         sc.setBoundingBox(WIDTH/2, 0, WIDTH, HEIGHT/2);
         sc.setGridSize(5);
         sc.clearSquaresToSkip();
@@ -83,13 +81,6 @@ int main()
         sc.addSquareToSkip(17);
         sc.addSquareToSkip(18);
         sc.Render(window);
-
-/*
-        CirclePattern cp = CirclePattern();
-        cp.setBoundingBox(0, 0, WIDTH, HEIGHT);
-        cp.setColor(sf::Color::Red);
-        cp.setNumberOfIterations(i);
-        cp.Render(window);
 */
 /*
         TreeFractal tf = TreeFractal();
@@ -103,7 +94,7 @@ int main()
         tf.setColor(brown);
         tf.setScalingFactor(0.88);
         tf.Render(window);
-        */
+*/
 //        drawKochSnowflake(sf::Vector2f(0, 0), sf::Vector2f(WIDTH, HEIGHT), i, true, window);
 //        drawKochSnowflake(sf::Vector2f(0, 0), sf::Vector2f(WIDTH, HEIGHT), i, falce, window);
 

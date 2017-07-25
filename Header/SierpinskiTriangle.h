@@ -32,7 +32,7 @@ public:
    *  Recursively calls itself for the top, left and right subtriangle and draws the final iteration
    */
   void drawSierpinskiTriangle(const sf::Vector2f &top, const sf::Vector2f &left, const sf::Vector2f &right,
-                      int iteration, int numberOfIterations, sf::RenderWindow &window);
+                      int iteration, sf::RenderWindow &window);
 
   void Render(sf::RenderWindow& window);
 

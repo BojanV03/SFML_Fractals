@@ -73,24 +73,24 @@ void KochSnowflake::Render(sf::RenderWindow& window)
   {
     if(m_inverted)
     {
-      drawKochSnowflake(right, left, 1, m_numberOfIterations, m_inverted, window);
-      drawKochSnowflake(left, top, 1, m_numberOfIterations, m_inverted, window);
-      drawKochSnowflake(top, right, 1, m_numberOfIterations, m_inverted, window);
+      drawKochSnowflake(right, left, 1, m_inverted, window);
+      drawKochSnowflake(left, top, 1, m_inverted, window);
+      drawKochSnowflake(top, right, 1, m_inverted, window);
     }
     else
     {
       drawTriangle(top, left, right, m_color, window);
-      drawKochSnowflake(left, right, 1, m_numberOfIterations, m_inverted, window);
-      drawKochSnowflake(top, left, 1, m_numberOfIterations, m_inverted, window);
-      drawKochSnowflake(right, top, 1, m_numberOfIterations, m_inverted, window);
+      drawKochSnowflake(left, right, 1, m_inverted, window);
+      drawKochSnowflake(top, left, 1, m_inverted, window);
+      drawKochSnowflake(right, top, 1, m_inverted, window);
     }
   }
 }
 
 void KochSnowflake::drawKochSnowflake(sf::Vector2f pointA, sf::Vector2f pointB,
-   int currentIteration, int numberOfIterations, bool inverted, sf::RenderWindow& window)
+   int currentIteration, bool inverted, sf::RenderWindow& window)
 {
-  if(currentIteration == numberOfIterations)
+  if(currentIteration == m_numberOfIterations)
   {    sf::Vector2f a = sf::Vector2f(ONE_THIRD * (pointA.x - pointB.x) + pointB.x, ONE_THIRD * (pointA.y - pointB.y) + pointB.y);
     sf::Vector2f b = sf::Vector2f(TWO_THIRDS * (pointA.x - pointB.x) + pointB.x, TWO_THIRDS * (pointA.y - pointB.y) + pointB.y);
     sf::Vector2f c = TopPoint(a, b);
@@ -105,10 +105,10 @@ void KochSnowflake::drawKochSnowflake(sf::Vector2f pointA, sf::Vector2f pointB,
 
     if(!inverted)
       drawTriangle(a, b, c, m_color, window);
-    drawKochSnowflake(pointA, a, currentIteration+1, numberOfIterations, inverted, window);
-    drawKochSnowflake(b, pointB, currentIteration+1, numberOfIterations, inverted, window);
-    drawKochSnowflake(a, c, currentIteration+1, numberOfIterations, inverted, window);
-    drawKochSnowflake(c, b, currentIteration+1, numberOfIterations, inverted, window);
+    drawKochSnowflake(pointA, a, currentIteration+1, inverted, window);
+    drawKochSnowflake(b, pointB, currentIteration+1, inverted, window);
+    drawKochSnowflake(a, c, currentIteration+1, inverted, window);
+    drawKochSnowflake(c, b, currentIteration+1, inverted, window);
   }
 }
 

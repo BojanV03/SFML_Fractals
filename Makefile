@@ -1,5 +1,5 @@
-exec: main.o TreeFractal.o SierpinskiTriangle.o SierpinskiCarpet.o Renderer.o CirclePattern.o KochSnowflake.o
-	g++ *.o -o exec -lsfml-graphics -lsfml-window -lsfml-system
+exec.out: main.o TreeFractal.o SierpinskiTriangle.o SierpinskiCarpet.o Renderer.o CirclePattern.o KochSnowflake.o
+	g++ *.o -o exec.out -lsfml-graphics -lsfml-window -lsfml-system
 
 main.o: main.cpp
 	g++ -c main.cpp

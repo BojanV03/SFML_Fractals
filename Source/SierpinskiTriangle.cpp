@@ -53,15 +53,15 @@ sf::Color SierpinskiTriangle::getColor() const
 
 
 void SierpinskiTriangle::drawSierpinskiTriangle(const sf::Vector2f &top, const sf::Vector2f &left, const sf::Vector2f &right,
-                    int iteration, int numberOfIterations, sf::RenderWindow &window)
+                    int iteration, sf::RenderWindow &window)
 {
-  if(numberOfIterations == 0)
+  if(m_numberOfIterations == 0)
   {
     sf::Color color = sf::Color(top.y/m_boundingBox.getSize().y*255, 0, right.x/m_boundingBox.getSize().x*255);
     drawTriangle(top, left, right, color, window);
     return;
   }
-  else if(iteration == numberOfIterations-1)
+  else if(iteration == m_numberOfIterations-1)
       return;
   else
   {
@@ -69,7 +69,7 @@ void SierpinskiTriangle::drawSierpinskiTriangle(const sf::Vector2f &top, const s
     sf::Vector2f midRight = sf::Vector2f((right.x + top.x)/2.0, (right.y + top.y)/2.0);
     sf::Vector2f midBottom = sf::Vector2f((left.x+right.x)/2.0, (left.y+right.y)/2.0);
 
-    if(iteration == numberOfIterations-2)
+    if(iteration == m_numberOfIterations-2)
     {
       sf::Color color = sf::Color(top.y/m_boundingBox.getSize().y*255, 0, midRight.x/m_boundingBox.getSize().x*255);
       drawTriangle(top, midLeft, midRight, color, window);
@@ -80,9 +80,9 @@ void SierpinskiTriangle::drawSierpinskiTriangle(const sf::Vector2f &top, const s
     }
     else
     {
-      drawSierpinskiTriangle(top, midLeft, midRight, iteration+1, numberOfIterations, window);
-      drawSierpinskiTriangle(midLeft, left, midBottom, iteration+1, numberOfIterations, window);
-      drawSierpinskiTriangle(midRight, midBottom, right, iteration+1, numberOfIterations, window);
+      drawSierpinskiTriangle(top, midLeft, midRight, iteration+1, window);
+      drawSierpinskiTriangle(midLeft, left, midBottom, iteration+1, window);
+      drawSierpinskiTriangle(midRight, midBottom, right, iteration+1, window);
     }
   }
 }
@@ -94,5 +94,5 @@ void SierpinskiTriangle::Render(sf::RenderWindow& window)
   sf::Vector2f top = sf::Vector2f((bottomRightPoint.x + topLeftPoint.x)/2.0, topLeftPoint.y);
   sf::Vector2f left = sf::Vector2f(topLeftPoint.x, bottomRightPoint.y);
   sf::Vector2f right = sf::Vector2f(bottomRightPoint.x, bottomRightPoint.y);
-  drawSierpinskiTriangle(top, left, right, -1, m_numberOfIterations, window);
+  drawSierpinskiTriangle(top, left, right, -1, window);
 }
