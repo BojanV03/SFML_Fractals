@@ -1,8 +1,11 @@
-exec.out: main.o TreeFractal.o SierpinskiTriangle.o SierpinskiCarpet.o Renderer.o CirclePattern.o KochSnowflake.o
+exec.out: main.o TreeFractal.o Mandelbrot.o SierpinskiTriangle.o SierpinskiCarpet.o Renderer.o CirclePattern.o KochSnowflake.o
 	g++ *.o -o exec.out -lsfml-graphics -lsfml-window -lsfml-system
 
 main.o: main.cpp
 	g++ -c main.cpp
+
+Mandelbrot.o: Source/Mandelbrot.cpp Header/Mandelbrot.h
+	g++ -c Source/Mandelbrot.cpp
 
 TreeFractal.o: Source/TreeFractal.cpp Header/TreeFractal.h
 	g++ -c Source/TreeFractal.cpp

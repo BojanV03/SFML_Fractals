@@ -9,6 +9,7 @@
 #include "Header/CirclePattern.h"
 #include "Header/KochSnowflake.h"
 #include "Header/TreeFractal.h"
+#include "Header/Mandelbrot.h"
 #define WIDTH 1024
 #define HEIGHT 1024
 
@@ -19,6 +20,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), "SFML works!");
 
+    window.setFramerateLimit(30);
     int i = 0;
     while (window.isOpen())
     {
@@ -47,6 +49,18 @@ int main()
         }
         window.clear();
 
+        Mandelbrot ml = Mandelbrot();
+        ml.setBoundingBox(0, HEIGHT/2, WIDTH/2, HEIGHT);
+        ml.setTopLeftReal(-2.1);
+        ml.setTopLeftImaginary(1.3);
+        ml.setBottomRightReal(1);
+        ml.setBottomRightImaginary(-1.3);
+  //      getchar();
+    //    getchar();
+    //    getchar();
+    //    getchar();
+    //    getchar();
+  //      getchar();
         SierpinskiTriangle st = SierpinskiTriangle();
         st.setBoundingBox(0, 0, WIDTH/2, HEIGHT/2);
         st.setNumberOfIterations(i);
@@ -68,6 +82,7 @@ int main()
         sc.setGridSize(3);
         sc.addSquareToSkip(4);
         sc.Render(window);
+        ml.Render(window);
 /*
         sc.setBoundingBox(WIDTH/2, 0, WIDTH, HEIGHT/2);
         sc.setGridSize(5);
