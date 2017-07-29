@@ -1,5 +1,6 @@
 #include "../Header/SierpinskiCarpet.h"
 
+
 SierpinskiCarpet::SierpinskiCarpet()
 {
   m_squaresToSkip = std::vector<int>();
@@ -8,6 +9,48 @@ SierpinskiCarpet::SierpinskiCarpet()
 SierpinskiCarpet::~SierpinskiCarpet()
 {
 
+}
+
+void SierpinskiCarpet::Render(sf::RenderWindow& window)
+{
+  sf::Vector2f bottomRightPoint = sf::Vector2f(m_boundingBox.getPosition().x + m_boundingBox.getSize().x, m_boundingBox.getPosition().y + m_boundingBox.getSize().y);
+  sf::Vector2f topLeftPoint = sf::Vector2f(m_boundingBox.getPosition());
+  drawSierpinskiCarpet(topLeftPoint, bottomRightPoint, 0, window);
+}
+
+void SierpinskiCarpet::drawSierpinskiCarpet(const sf::Vector2f &topLeftPoint, const sf::Vector2f &bottomRightPoint,
+  int currentIteration, sf::RenderWindow &window)
+{
+    if(currentIteration == m_numberOfIterations)
+    {
+      float width  = std::abs(bottomRightPoint.x - topLeftPoint.x);
+      float height = std::abs(bottomRightPoint.y - topLeftPoint.y);
+      sf::RectangleShape rect = sf::RectangleShape(sf::Vector2f(width, height));
+      int R = 255 - (1.0*bottomRightPoint.x)/m_boundingBox.getSize().x*255;
+      int G = 255 - (1.0*bottomRightPoint.y)/m_boundingBox.getSize().x*255;
+      int B = (R + G)/2;
+      sf::Color color = sf::Color(R, G, B);
+      rect.setFillColor(color);
+      rect.setPosition(topLeftPoint);
+      window.draw(rect);
+      return;
+    }
+    for(int i = 0; i < m_gridSize*m_gridSize; i++)
+    {
+      // Skip squares that are in the squaresToSkip Array
+      if(std::find(m_squaresToSkip.cbegin(), m_squaresToSkip.cend(), i) != m_squaresToSkip.cend())
+        continue;
+
+      float width = std::abs(bottomRightPoint.x - topLeftPoint.x)/m_gridSize;
+      float height= std::abs(bottomRightPoint.y - topLeftPoint.y)/m_gridSize;
+      int ii = i % m_gridSize;
+      int ij = i / m_gridSize;
+
+      sf::Vector2f newTopLeft = sf::Vector2f(topLeftPoint.x + (ii*width), topLeftPoint.y + ij*height);
+      sf::Vector2f newBottomRight = sf::Vector2f(topLeftPoint.x + (ii+1)*width, topLeftPoint.y + (ij+1)*height);
+
+      drawSierpinskiCarpet(newTopLeft, newBottomRight, currentIteration+1, window);
+    }
 }
 
 void SierpinskiCarpet::addSquareToSkip(int n)
@@ -74,14 +117,6 @@ sf::Color SierpinskiCarpet::getColor() const
 }
 
 
-void SierpinskiCarpet::Render(sf::RenderWindow& window)
-{
-  sf::Vector2f bottomRightPoint = sf::Vector2f(m_boundingBox.getPosition().x + m_boundingBox.getSize().x, m_boundingBox.getPosition().y + m_boundingBox.getSize().y);
-  sf::Vector2f topLeftPoint = sf::Vector2f(m_boundingBox.getPosition());
-  drawSierpinskiCarpet(topLeftPoint, bottomRightPoint, 0, window);
-
-}
-
 void SierpinskiCarpet::setGridSize(int newGridSize)
 {
   m_gridSize = newGridSize;
@@ -89,40 +124,4 @@ void SierpinskiCarpet::setGridSize(int newGridSize)
 int SierpinskiCarpet::getGridSize() const
 {
   return m_gridSize;
-}
-
-void SierpinskiCarpet::drawSierpinskiCarpet(const sf::Vector2f &topLeftPoint, const sf::Vector2f &bottomRightPoint,
-  int currentIteration, sf::RenderWindow &window)
-{
-    if(currentIteration == m_numberOfIterations)
-    {
-      float width  = std::abs(bottomRightPoint.x - topLeftPoint.x);
-      float height = std::abs(bottomRightPoint.y - topLeftPoint.y);
-      sf::RectangleShape rect = sf::RectangleShape(sf::Vector2f(width, height));
-      int R = 255 - (1.0*bottomRightPoint.x)/m_boundingBox.getSize().x*255;
-      int G = 255 - (1.0*bottomRightPoint.y)/m_boundingBox.getSize().x*255;
-      int B = (R + G)/2;
-      sf::Color color = sf::Color(R, G, B);
-      rect.setFillColor(color);
-      rect.setPosition(topLeftPoint);
-      window.draw(rect);
-      return;
-    }
-//    std::cout << currentIteration << std::endl;
-    for(int i = 0; i < m_gridSize*m_gridSize; i++)
-    {
-      if(std::find(m_squaresToSkip.cbegin(), m_squaresToSkip.cend(), i) != m_squaresToSkip.cend())
-        continue;
-
-      float width = std::abs(bottomRightPoint.x - topLeftPoint.x)/m_gridSize;
-      float height= std::abs(bottomRightPoint.y - topLeftPoint.y)/m_gridSize;
-      int ii = i % m_gridSize;
-      int ij = i / m_gridSize;
-
-  //        std::cout << "    " << i << std::endl;
-      sf::Vector2f newTopLeft = sf::Vector2f(topLeftPoint.x + (ii*width), topLeftPoint.y + ij*height);
-      sf::Vector2f newBottomRight = sf::Vector2f(topLeftPoint.x + (ii+1)*width, topLeftPoint.y + (ij+1)*height);
-
-      drawSierpinskiCarpet(newTopLeft, newBottomRight, currentIteration+1, window);
-    }
 }

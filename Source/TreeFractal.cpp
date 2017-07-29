@@ -11,11 +11,63 @@ TreeFractal::~TreeFractal()
 
 }
 
+void TreeFractal::drawTreeFractal(int iteration, const sf::Vector2f& rootPosition, float rootRotation, sf::RenderWindow& window)
+{
+  if(m_numberOfIterations <= 1)
+    return;
+
+  if(iteration == m_numberOfIterations)
+  {
+    float scalingFactor = pow(m_scalingFactor, iteration);
+    sf::CircleShape circle = sf::CircleShape(m_initWidth*scalingFactor*1.1);
+    circle.setFillColor(sf::Color::White);
+
+    circle.setPosition(sf::Vector2f(rootPosition.x-circle.getRadius(), rootPosition.y-circle.getRadius()));
+    window.draw(circle);
+    return;
+  }
+
+  float scalingFactor = pow(m_scalingFactor, iteration);
+  sf::RectangleShape rect = sf::RectangleShape();
+
+  float width=m_initWidth*scalingFactor;
+  float height=m_initHeight*scalingFactor;
+
+  rect.setSize(sf::Vector2f(width, height));
+  sf::Color scaledColor = sf::Color(m_rootColor.r * scalingFactor, m_rootColor.g * scalingFactor, m_rootColor.b * scalingFactor);
+  rect.setFillColor(scaledColor);
+  rect.setRotation(rootRotation);
+  rect.setPosition(rootPosition);
+  window.draw(rect);
+
+  // SFML angles go clockwise therefore -sin is required
+  float x = rootPosition.x - std::sin((rootRotation*M_PI)/180)*height;
+  float y = rootPosition.y + std::cos((rootRotation*M_PI)/180)*height;
+
+//  std::cout << rootPosition.x << " vs " << rootPosition.x + std::sin((rootRotation*M_PI)/180)*width << std::endl;
+  drawTreeFractal(iteration+1, sf::Vector2f(x, y), rootRotation+m_leftAngle, window);
+  drawTreeFractal(iteration+1, sf::Vector2f(x, y), rootRotation-m_rightAngle, window);
+}
+
+void TreeFractal::Render(sf::RenderWindow& window)
+{
+  sf::RectangleShape rect = sf::RectangleShape(sf::Vector2f(m_initWidth, m_initHeight));
+  rect.setFillColor(m_rootColor);
+  rect.setPosition(m_startLocation);
+  rect.setRotation(180);
+
+  float x = m_startLocation.x - std::sin((180*M_PI)/180) * m_initHeight;
+  float y = m_startLocation.y + std::cos((180*M_PI)/180) * m_initHeight;
+
+  window.draw(rect);
+  drawTreeFractal(1, sf::Vector2f(x, y), 180 - m_leftAngle, window);
+  drawTreeFractal(1, sf::Vector2f(x, y), 180 + m_rightAngle,window);
+}
+
 sf::Vector2f& TreeFractal::getStartLocation()
 {
   return m_startLocation;
 }
-
 
 void TreeFractal::setStartLocation(sf::Vector2f& newStartLocation)
 {
@@ -88,56 +140,4 @@ float TreeFractal::getScalingFactor()
 void TreeFractal::setScalingFactor(float newScalingFactor)
 {
   m_scalingFactor = newScalingFactor;
-}
-
-void TreeFractal::drawTreeFractal(int iteration, const sf::Vector2f& rootPosition, float rootRotation, sf::RenderWindow& window)
-{
-  if(m_numberOfIterations <= 1)
-    return;
-
-  if(iteration == m_numberOfIterations)
-  {
-    float scalingFactor = pow(m_scalingFactor, iteration);
-    sf::CircleShape circle = sf::CircleShape(m_initWidth*scalingFactor*1.1);
-    circle.setFillColor(sf::Color::White);
-
-    circle.setPosition(sf::Vector2f(rootPosition.x-circle.getRadius(), rootPosition.y-circle.getRadius()));
-    window.draw(circle);
-    return;
-  }
-
-  float scalingFactor = pow(m_scalingFactor, iteration);
-  sf::RectangleShape rect = sf::RectangleShape();
-
-  float width=m_initWidth*scalingFactor;
-  float height=m_initHeight*scalingFactor;
-
-  rect.setSize(sf::Vector2f(width, height));
-  sf::Color scaledColor = sf::Color(m_rootColor.r * scalingFactor, m_rootColor.g * scalingFactor, m_rootColor.b * scalingFactor);
-  rect.setFillColor(scaledColor);
-  rect.setRotation(rootRotation);
-  rect.setPosition(rootPosition);
-  window.draw(rect);
-
-  float x = rootPosition.x - std::sin((rootRotation*M_PI)/180)*height;
-  float y = rootPosition.y + std::cos((rootRotation*M_PI)/180)*height;
-
-//  std::cout << rootPosition.x << " vs " << rootPosition.x + std::sin((rootRotation*M_PI)/180)*width << std::endl;
-  drawTreeFractal(iteration+1, sf::Vector2f(x, y), rootRotation+m_leftAngle, window);
-  drawTreeFractal(iteration+1, sf::Vector2f(x, y), rootRotation-m_rightAngle, window);
-}
-
-void TreeFractal::Render(sf::RenderWindow& window)
-{
-  sf::RectangleShape rect = sf::RectangleShape(sf::Vector2f(m_initWidth, m_initHeight));
-  rect.setFillColor(m_rootColor);
-  rect.setPosition(m_startLocation);
-  rect.setRotation(180);
-
-  float x = m_startLocation.x - std::sin((180*M_PI)/180) * m_initHeight;
-  float y = m_startLocation.y + std::cos((180*M_PI)/180) * m_initHeight;
-
-  window.draw(rect);
-  drawTreeFractal(1, sf::Vector2f(x, y), 180 - m_leftAngle, window);
-  drawTreeFractal(1, sf::Vector2f(x, y), 180 + m_rightAngle,window);
 }

@@ -40,7 +40,7 @@ public:
   void UpdateImage();
   void UpdateImageOptimized(int numberOfIterations);
 
-  void finePrintTime(const std::string& prefix, int ETA);
+  void prettyPrintTime(const std::string& prefix, int ETA);
   void saveImage(const std::string& fileName, int numberOfIterations, int width, int height);
 
 private:
