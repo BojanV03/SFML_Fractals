@@ -28,7 +28,7 @@ Download the SDK from the [download page](https://www.sfml-dev.org/download.php)
 
 If you want to go this way, there's a [dedicated tutorial](https://www.sfml-dev.org/tutorials/2.0/compile-with-cmake.php) on building SFML yourself.
 
-## :wrench: Setup and run the game
+## :wrench: Setup and run
 
 1. Download (clone) this repository
 2. In main.cpp, define the desired fractal preset you want to see
@@ -64,7 +64,7 @@ custom 5x5 carpet excluding the (1, 1), (1, 2), (1, 3), (2, 1), (2, 3), (3, 1), 
 custom 5x5 carpet excluding the top left and bottom right edge squares, looks kinda like a snowflake, doesn't it?
 ![Sierpinski Carpet Snowflake](https://raw.githubusercontent.com/BojanV03/SFML_Fractals/master/Images/SierpinskiCarpetSnowflake.jpg "Sierpinski Carpet Snowflake")
 
-custom 5x5 carpet excluding the (0, 0) and (0, 4) squares:
+custom 3x3 carpet excluding the top left and bottom right squares:
 ![Sierpinski Carpet Tank](https://raw.githubusercontent.com/BojanV03/SFML_Fractals/master/Images/SierpinskiCarpetTank.png "Sierpinski Carpet Tank")
 
 ## Tree Fractal:
