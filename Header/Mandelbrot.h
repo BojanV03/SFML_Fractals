@@ -3,7 +3,13 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <iostream>
+#include <chrono>
 
+#define NUM_OF_SECS_YEAR (31556926)
+#define NUM_OF_SECS_DAY (86400)
+#define NUM_OF_SECS_HOUR (3600)
+#define NUM_OF_SECS_MINUTE (60)
 class Mandelbrot
 {
 public:
@@ -12,6 +18,9 @@ public:
   void setBoundingBox(const sf::Vector2f& topLeft, const sf::Vector2f& bottomRight);
   void setBoundingBox(float x1, float y1, float x2, float y2);
   sf::RectangleShape getBoundingBox() const;
+
+  void move(const sf::Vector2i& vector);
+  void zoom(const sf::Vector2i& vector, int zoomAmount);
 
   double getTopLeftReal();
   void setTopLeftReal(double newTopLeftReal);
@@ -29,6 +38,10 @@ public:
 
   void Render(sf::RenderWindow& window);
   void UpdateImage();
+  void UpdateImageOptimized(int numberOfIterations);
+
+  void finePrintTime(const std::string& prefix, int ETA);
+  void saveImage(const std::string& fileName, int numberOfIterations, int width, int height);
 
 private:
   void setImageBounds();
