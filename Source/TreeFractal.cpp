@@ -1,6 +1,8 @@
 #include "../Header/TreeFractal.h"
 #include "math.h"
 
+/* TreeFractal -_- */
+
 TreeFractal::TreeFractal()
 {
 
