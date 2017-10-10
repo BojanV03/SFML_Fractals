@@ -2,6 +2,7 @@
 
 /*
  * This isn't really a fractal but... I like it
+ * This is another line of code
  */
 
 void CirclePattern::Render(sf::RenderWindow& window)
