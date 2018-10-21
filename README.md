@@ -9,8 +9,9 @@ This version is mainly tested on Ubuntu.
 
 1. **Install g++**
 
-$ sudo apt-get update
-$ sudo apt-get install g++
+` sudo apt-get update `
+
+` sudo apt-get install g++ `
 
 2. **Install SFML library**
 
